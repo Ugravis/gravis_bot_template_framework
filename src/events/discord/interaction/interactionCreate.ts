@@ -1,5 +1,5 @@
 import { DiscClient } from "@/core/client/DiscClient";
-import { BaseEvent } from "@/core/events/BaseEvent";
+import { BaseEvent } from "@/core/baseClasses/BaseEvent";
 import { Interaction } from "discord.js";
 
 export default class InteractionCreate extends BaseEvent {
@@ -12,7 +12,7 @@ export default class InteractionCreate extends BaseEvent {
     try {
       switch (true) {
         case interaction.isChatInputCommand(): {
-          const cmd = client.interactions.slashCommands.get(interaction.commandName)
+          const cmd = client.interactionsManager.slashCommands.get(interaction.commandName)
           if (!cmd) return
           await cmd.execute(client, interaction)
           break

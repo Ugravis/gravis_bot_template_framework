@@ -1,11 +1,11 @@
 import { Client, GatewayIntentBits } from "discord.js"
-import { InteractionManager } from "./InteractionsManager"
-import { EventManager } from "./EventManager"
+import { InteractionManager } from "../loaders/InteractionsManager"
+import { EventManager } from "../loaders/EventManager"
 import { join } from "path"
 
 export class DiscClient extends Client {
-  public events: EventManager
-  public interactions: InteractionManager
+  public eventsManager: EventManager
+  public interactionsManager: InteractionManager
 
   constructor() {
     super({
@@ -18,14 +18,14 @@ export class DiscClient extends Client {
       ]
     })
 
-    this.events = new EventManager(this)
-    this.interactions = new InteractionManager()
+    this.eventsManager = new EventManager()
+    this.interactionsManager = new InteractionManager()
   }
 
   async init(): Promise<void> {
     try {
-      await this.interactions.loadAll(join(__dirname, '../../features'))
-      await this.events.loadAll(join(__dirname, '../../events'))
+      await this.interactionsManager.loadAll(join(__dirname, '../../features'))
+      await this.eventsManager.loadAll(join(__dirname, '../../events'))
 
       await this.login(
         process.env.NODE_ENV === 'development'

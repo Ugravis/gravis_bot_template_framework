@@ -1,9 +1,9 @@
 import { Collection } from "discord.js";
-import { DiscClient } from "./DiscClient";
-import { BaseSlashCommand } from "../interactions/BaseSlashCommand";
-import { BaseButtonCommand } from "../interactions/BaseButtonCommand";
-import { BaseModalSubmitCommand } from "../interactions/BaseModalSubmitCommand";
-import { BaseClassicCommand } from "../interactions/BaseClassicCommand";
+import { DiscClient } from "../client/DiscClient";
+import { BaseSlashCommand } from "../baseClasses/BaseSlashCommand";
+import { BaseButtonCommand } from "../baseClasses/BaseButtonCommand";
+import { BaseModalSubmitCommand } from "../baseClasses/BaseModalSubmitCommand";
+import { BaseClassicCommand } from "../baseClasses/BaseClassicCommand";
 import { readdirSync, statSync } from "fs";
 import { join } from "path";
 

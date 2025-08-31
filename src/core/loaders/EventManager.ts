@@ -1,16 +1,10 @@
 import { Collection } from "discord.js";
-import { DiscClient } from "./DiscClient";
-import { BaseEvent } from "../events/BaseEvent";
+import { BaseEvent } from "../baseClasses/BaseEvent";
 import { readdirSync, statSync } from "fs";
 import { join } from "path";
 
 export class EventManager {
-  private client: DiscClient
-  private events = new Collection<string, BaseEvent>()
-
-  constructor(client: DiscClient) {
-    this.client = client
-  }
+  public events = new Collection<string, BaseEvent>()
 
   async loadAll(folderPath: string) {
     const entries = readdirSync(folderPath)
@@ -33,25 +27,10 @@ export class EventManager {
           this.events.set(instance.name, instance)
           console.log(`✅ Event loaded: ${instance.name}`)
 
-          this.client.on(instance.name, async (...args: any[]) => {
-            await this.dispatchEvent(instance, ...args)
-          })
-
         } catch (err) {
           continue
         }
       }
-    }
-  }
-  
-  private async dispatchEvent(event: BaseEvent, ...args: any[]) {
-    try {
-      // this.beforeEvent... à faire plus tard
-      const result = await event.execute(this.client, ...args)
-      // this.afterEvent... à faire plus tard
-
-    } catch (err) {
-      console.error(`❌ Error during event ${event.name}`, err)
     }
   }
 }

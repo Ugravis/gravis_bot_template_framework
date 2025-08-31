@@ -1,5 +1,5 @@
 import { DiscClient } from "@/core/client/DiscClient";
-import { BaseSlashCommand } from "@/core/interactions/BaseSlashCommand";
+import { BaseSlashCommand } from "@/core/baseClasses/BaseSlashCommand";
 import { ChatInputCommandInteraction, SlashCommandBuilder } from "discord.js";
 
 export default class PingCommand extends BaseSlashCommand {
@@ -10,6 +10,6 @@ export default class PingCommand extends BaseSlashCommand {
     .setDescription(this.description)
 
   async execute(client: DiscClient, interaction: ChatInputCommandInteraction): Promise<void> {
-    await interaction.reply('Pong')
+    await interaction.reply('https://tenor.com/view/thor-thor-infinity-war-gif-25139201')
   }
 }
