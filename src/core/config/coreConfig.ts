@@ -33,32 +33,44 @@ export const coreConfig: CoreConfig = {
   },
   dev: {
     presence: {
-      status: Status.Connecting,
+      status: "online",
       activities: [
         {
           type: ActivityType.Watching,
           name: "incredible template framework [ON DEV]",
-          url: ""
+          url: "https://ugravis.com"
         }
       ]
     },
     defaultData: {
       prefix: "*"
+    },
+    discord_log_channels: {
+      ready: {
+        guildId: "800287894073245706",
+        channelId: "805198657351712788"
+      }
     }
   },
   prod: {
     presence: {
-      status: Status.Connecting,
+      status: "online",
       activities: [
         {
           type: ActivityType.Watching,
           name: "incredible template framework",
-          url: ""
+          url: "https://ugravis.com"
         }
       ]
     },
     defaultData: {
       prefix: "."
+    },
+    discord_log_channels: {
+      ready: {
+        guildId: "800287894073245706",
+        channelId: "805198657351712788"
+      }
     }
   },
   code: {

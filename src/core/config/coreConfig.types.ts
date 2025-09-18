@@ -1,4 +1,4 @@
-import { ActivityOptions, GatewayIntentBits, Status } from "discord.js"
+import { ActivityOptions, GatewayIntentBits, PresenceStatusData } from "discord.js"
 
 export interface CoreConfig {
   globals: {
@@ -36,10 +36,16 @@ export interface CoreConfig {
 
 export interface EnvConfig {
   presence: {
-    status: Status
+    status: PresenceStatusData
     activities: ActivityOptions[]
   }
   defaultData: {
     prefix: string
+  }
+  discord_log_channels: {
+    ready: {
+      guildId: string
+      channelId: string
+    }
   }
 }

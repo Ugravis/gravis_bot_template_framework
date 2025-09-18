@@ -1,27 +1,31 @@
 import { Client } from 'discord.js'
-import { CoreConfig } from '../config/coreConfig.types'
+import { CoreConfig, EnvConfig } from '../config/coreConfig.types'
 import { coreConfig } from '../config/coreConfig'
 import { InteractionsManager } from '../managers/InteractionsManager'
 import { EventsManager } from '../managers/EventsManager'
+import { join } from "path"
 
 export class MyClient extends Client {
-  private coreConfig: CoreConfig
+  public coreConfig: CoreConfig
+  public envConfig: EnvConfig
   public eventsManager: EventsManager
   private interactionsManager: InteractionsManager
+  private nodeEnv: string | undefined = process.env.NODE_ENV
 
   constructor() {
     super({
-      intents: [coreConfig.globals.discordSystem.intents]
+      intents: coreConfig.globals.discordSystem.intents
     })
     this.coreConfig = coreConfig
-    this.eventsManager = new EventsManager()
-    this.interactionsManager = new InteractionsManager()
+    this.envConfig = this.nodeEnv === 'development' ? this.coreConfig.dev : this.coreConfig.prod
+    this.eventsManager = new EventsManager(this)
+    this.interactionsManager = new InteractionsManager(this)
   }
   
   public async init(): Promise<void> {
     try {
-      await this.interactionsManager.loadAll(this.coreConfig.code.paths.features)
-      await this.eventsManager.loadAll(this.coreConfig.code.paths.featuresEvents)
+      await this.interactionsManager.loadAll(join(process.cwd(), this.coreConfig.code.paths.features))
+      await this.eventsManager.loadAll(join(process.cwd(), this.coreConfig.code.paths.featuresEvents))
 
       await this.login(
         process.env.NODE_ENV === 'development'

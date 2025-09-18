@@ -3,9 +3,12 @@ import { BaseSlashCommand } from "../classes/BaseSlashCommand"
 import { readdirSync, statSync } from "fs"
 import { join } from "path"
 import { BaseInteraction } from "../classes/BaseInteraction"
+import { MyClient } from "../client/MyClient"
 
 export class InteractionsManager {
   public slashCommands = new Collection<string, BaseSlashCommand>()
+
+  constructor(private client: MyClient) {}
 
   async loadAll(folderPath: string) {
     const entries = readdirSync(folderPath)
@@ -25,6 +28,7 @@ export class InteractionsManager {
           if (!(InteractionClass.prototype instanceof BaseInteraction)) continue
 
           const interaction: BaseInteraction = new InteractionClass()
+          interaction.client = this.client
 
           switch (interaction.type) {
             case InteractionType.ApplicationCommand:

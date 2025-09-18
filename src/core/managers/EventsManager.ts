@@ -2,9 +2,12 @@ import { Collection } from "discord.js"
 import { readdirSync, statSync } from "fs"
 import { join } from "path"
 import { BaseEvent } from "../classes/BaseEvent"
+import { MyClient } from "../client/MyClient"
 
 export class EventsManager {
   public events = new Collection<string, BaseEvent>()
+
+  constructor(private client: MyClient) {}
 
   async loadAll(folderPath: string) {
     const entries = readdirSync(folderPath)
@@ -24,6 +27,7 @@ export class EventsManager {
           if (!(EventClass.prototype instanceof BaseEvent)) continue
 
           const event: BaseEvent = new EventClass()
+          event.client = this.client
 
           this.events.set(event.name, event)
           console.log(`✅ Event loaded: ${event.name}`)
