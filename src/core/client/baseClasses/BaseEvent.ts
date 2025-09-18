@@ -1,4 +1,4 @@
-import { DiscClient } from "../client/DiscClient"
+import { DiscClient } from "../DiscClient"
 
 export abstract class BaseEvent {
   abstract name: string

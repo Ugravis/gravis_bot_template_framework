@@ -1,5 +1,5 @@
 import { DiscClient } from "@/core/client/DiscClient";
-import { BaseEvent } from "@/core/baseClasses/BaseEvent";
+import { BaseEvent } from "@/core/client/baseClasses/BaseEvent";
 import { Interaction } from "discord.js";
 
 export default class InteractionCreate extends BaseEvent {

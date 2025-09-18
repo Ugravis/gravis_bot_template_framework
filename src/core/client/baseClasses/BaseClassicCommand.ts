@@ -1,6 +1,6 @@
 import { Interaction } from "discord.js";
 import { BaseInteraction, InteractionType } from "./BaseInteraction";
-import { DiscClient } from "../client/DiscClient";
+import { DiscClient } from "../DiscClient";
 
 export abstract class BaseClassicCommand extends BaseInteraction<Interaction> {
   type: InteractionType = "classicCommand"

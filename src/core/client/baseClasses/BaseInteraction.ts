@@ -1,5 +1,5 @@
 import { Interaction } from "discord.js"
-import { DiscClient } from "../client/DiscClient"
+import { DiscClient } from "../DiscClient"
 
 export type InteractionType = "slashCommand" | "button" | "modalSubmit" | "classicCommand"
 

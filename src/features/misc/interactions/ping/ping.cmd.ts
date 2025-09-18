@@ -1,5 +1,5 @@
 import { DiscClient } from "@/core/client/DiscClient";
-import { BaseSlashCommand } from "@/core/baseClasses/BaseSlashCommand";
+import { BaseSlashCommand } from "@/core/client/baseClasses/BaseSlashCommand";
 import { ChatInputCommandInteraction, SlashCommandBuilder } from "discord.js";
 
 export default class PingCommand extends BaseSlashCommand {

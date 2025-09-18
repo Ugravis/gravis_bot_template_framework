@@ -1,6 +1,6 @@
 import { ButtonInteraction } from "discord.js";
 import { BaseInteraction, InteractionType } from "./BaseInteraction";
-import { DiscClient } from "../client/DiscClient";
+import { DiscClient } from "../DiscClient";
 
 export abstract class BaseButtonCommand extends BaseInteraction<ButtonInteraction> {
   type: InteractionType = "button"

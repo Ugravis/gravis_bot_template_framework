@@ -1,5 +1,5 @@
 import { Collection } from "discord.js";
-import { BaseEvent } from "../baseClasses/BaseEvent";
+import { BaseEvent } from "../client/baseClasses/BaseEvent";
 import { readdirSync, statSync } from "fs";
 import { join } from "path";
 
