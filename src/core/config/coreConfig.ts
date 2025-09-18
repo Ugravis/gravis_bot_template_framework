@@ -63,7 +63,7 @@ export const coreConfig: CoreConfig = {
   },
   code: {
     paths: {
-      features: ""
+      features: "src/features"
     }
   }
 }
