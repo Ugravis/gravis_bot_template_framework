@@ -1,23 +1,27 @@
 import { Client } from 'discord.js'
 import { CoreConfig } from '../config/coreConfig.types'
 import { coreConfig } from '../config/coreConfig'
-import { InteractionsHandler } from '../handlers/interactionsHandler'
+import { InteractionsManager } from '../managers/InteractionsManager'
+import { EventsManager } from '../managers/EventsManager'
 
 export class MyClient extends Client {
   private coreConfig: CoreConfig
-  private interactionsHandler: InteractionsHandler
+  public eventsManager: EventsManager
+  private interactionsManager: InteractionsManager
 
   constructor() {
     super({
       intents: [coreConfig.globals.discordSystem.intents]
     })
     this.coreConfig = coreConfig
-    this.interactionsHandler = new InteractionsHandler()
+    this.eventsManager = new EventsManager()
+    this.interactionsManager = new InteractionsManager()
   }
   
   public async init(): Promise<void> {
     try {
-      await this.interactionsHandler.loadAll(this.coreConfig.code.paths.features)
+      await this.interactionsManager.loadAll(this.coreConfig.code.paths.features)
+      await this.eventsManager.loadAll(this.coreConfig.code.paths.featuresEvents)
 
       await this.login(
         process.env.NODE_ENV === 'development'

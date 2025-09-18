@@ -4,7 +4,7 @@ import { readdirSync, statSync } from "fs"
 import { join } from "path"
 import { BaseInteraction } from "../classes/BaseInteraction"
 
-export class InteractionsHandler {
+export class InteractionsManager {
   public slashCommands = new Collection<string, BaseSlashCommand>()
 
   async loadAll(folderPath: string) {

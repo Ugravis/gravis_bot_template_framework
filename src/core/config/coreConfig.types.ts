@@ -29,6 +29,7 @@ export interface CoreConfig {
   code: {
     paths: {
       features: string
+      featuresEvents: string
     }
   }
 }
