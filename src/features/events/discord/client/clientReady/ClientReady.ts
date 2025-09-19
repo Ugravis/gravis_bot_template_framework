@@ -14,10 +14,10 @@ export default class ClientReadyEvent extends BaseEvent<[Client]> {
     if (this.client.isDevEnv()) {
       this.client.coreConfig.globals.developersList.guildIds.all.forEach(guildId => {
         const guild = getClientGuild(this.client, guildId)
-        guild?.commands.set(this.client.interactionsManager.slashCommands.map(cmd => cmd.data))
+        guild?.commands.set(this.client.interactionsManager.slashCommands.map(cmd => cmd.getDiscordCommandBuilder()))
       })
     } else {
-      this.client.application?.commands.set(this.client.interactionsManager.slashCommands.map(cmd => cmd.data))
+      this.client.application?.commands.set(this.client.interactionsManager.slashCommands.map(cmd => cmd.getDiscordCommandBuilder()))
     }
 
     const channel = getClientGuildTextChannel(this.client, readyConfig.guildId, readyConfig.channelId)
