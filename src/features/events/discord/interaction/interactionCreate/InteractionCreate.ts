@@ -14,8 +14,8 @@ export default class InteractionCreate extends BaseEvent<[BaseInteraction]> {
 
       await slashCommand?.execute(interaction)
       return
-    }
 
-    // Autres types d'interactions...
+      // Autres types d'interactions...
+    }
   }
 }

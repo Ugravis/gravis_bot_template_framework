@@ -7,5 +7,6 @@ export default class Ping extends BaseSlashCommand {
 
   async execute(interaction: ChatInputCommandInteraction<CacheType>): Promise<void> {
     interaction.reply('Pong')
+    throw new Error("Test")
   }
 }

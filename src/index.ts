@@ -12,7 +12,7 @@ import { MyClient } from './core/client/MyClient'
       try {
         await event.execute(...args)
       } catch (err) {
-        console.error(`❌ Error during event ${event.name}`, err)
+        await client.logger.error(`Event ${event.name}`, err)
       }
     })
   })

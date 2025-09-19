@@ -4,6 +4,7 @@ import { coreConfig } from '../config/coreConfig'
 import { InteractionsManager } from '../managers/InteractionsManager'
 import { EventsManager } from '../managers/EventsManager'
 import { join } from "path"
+import { LoggerManager } from '../managers/LoggerManager'
 
 export class MyClient extends Client {
   public coreConfig: CoreConfig
@@ -11,6 +12,7 @@ export class MyClient extends Client {
   public eventsManager: EventsManager
   public interactionsManager: InteractionsManager
   private nodeEnv: string | undefined = process.env.NODE_ENV
+  public logger!: LoggerManager
 
   constructor() {
     super({
@@ -20,6 +22,7 @@ export class MyClient extends Client {
     this.envConfig = this.nodeEnv === 'development' ? this.coreConfig.dev : this.coreConfig.prod
     this.eventsManager = new EventsManager(this)
     this.interactionsManager = new InteractionsManager(this)
+    this.logger = new LoggerManager(this)
   }
   
   public async init(): Promise<void> {

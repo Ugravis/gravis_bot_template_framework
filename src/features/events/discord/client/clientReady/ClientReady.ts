@@ -7,7 +7,9 @@ export default class ClientReadyEvent extends BaseEvent<[Client]> {
   description: string = 'Démarrage du bot'
 
   async execute(): Promise<void> {
-    const readyConfig = this.client.envConfig.discord_log_channels.ready
+    const readyLogConfig = this.client.envConfig.discord_log_channels.ready
+
+    this.client.logger.init()
     
     this.client.user?.setPresence(this.client.envConfig.presence)
 
@@ -20,7 +22,7 @@ export default class ClientReadyEvent extends BaseEvent<[Client]> {
       this.client.application?.commands.set(this.client.interactionsManager.slashCommands.map(cmd => cmd.getDiscordCommandBuilder()))
     }
 
-    const channel = getClientGuildTextChannel(this.client, readyConfig.guildId, readyConfig.channelId)
+    const channel = getClientGuildTextChannel(this.client, readyLogConfig.guildId, readyLogConfig.channelId)
     await channel?.send("Ready")
     
     return

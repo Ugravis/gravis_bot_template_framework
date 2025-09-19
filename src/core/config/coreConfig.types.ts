@@ -47,5 +47,9 @@ export interface EnvConfig {
       guildId: string
       channelId: string
     }
+    codeError: {
+      guildId: string
+      channelId: string
+    }
   }
 }

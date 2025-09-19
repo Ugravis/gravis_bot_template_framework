@@ -49,6 +49,10 @@ export const coreConfig: CoreConfig = {
       ready: {
         guildId: "800287894073245706",
         channelId: "805198657351712788"
+      },
+      codeError: {
+        guildId: "800287894073245706",
+        channelId: "1418608432856170547"
       }
     }
   },
@@ -70,6 +74,10 @@ export const coreConfig: CoreConfig = {
       ready: {
         guildId: "800287894073245706",
         channelId: "805198657351712788"
+      },
+      codeError: {
+        guildId: "800287894073245706",
+        channelId: "1418608432856170547"
       }
     }
   },
