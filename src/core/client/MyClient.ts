@@ -9,7 +9,7 @@ export class MyClient extends Client {
   public coreConfig: CoreConfig
   public envConfig: EnvConfig
   public eventsManager: EventsManager
-  private interactionsManager: InteractionsManager
+  public interactionsManager: InteractionsManager
   private nodeEnv: string | undefined = process.env.NODE_ENV
 
   constructor() {
@@ -28,7 +28,7 @@ export class MyClient extends Client {
       await this.eventsManager.loadAll(join(process.cwd(), this.coreConfig.code.paths.featuresEvents))
 
       await this.login(
-        process.env.NODE_ENV === 'development'
+        this.isDevEnv()
           ? process.env.DEV_BOT_TOKEN
           : process.env.PROD_BOT_TOKEN
       )
@@ -37,5 +37,9 @@ export class MyClient extends Client {
     } catch (err) {
       console.error(`❌ Error on DiscBot login: `, err)
     }
+  }
+
+  public isDevEnv(): boolean {
+    return this.nodeEnv === 'development'
   }
 }

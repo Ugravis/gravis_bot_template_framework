@@ -10,7 +10,7 @@ import { MyClient } from './core/client/MyClient'
   client.eventsManager.events.forEach(event => {
     client.on(event.name, async (...args) => {
       try {
-        await event.execute(client, ...args)
+        await event.execute(...args)
       } catch (err) {
         console.error(`❌ Error during event ${event.name}`, err)
       }
