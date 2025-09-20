@@ -1,5 +1,5 @@
 import { ActivityType, GatewayIntentBits, Status } from "discord.js";
-import { CoreConfig } from "./coreConfig.types";
+import { CoreConfig } from "./core.config.types";
 
 export const coreConfig: CoreConfig = {
   globals: {
@@ -85,6 +85,9 @@ export const coreConfig: CoreConfig = {
     paths: {
       features: "src/features",
       featuresEvents: "src/features/events"
+    },
+    database: {
+      port: 3306
     }
   }
 }

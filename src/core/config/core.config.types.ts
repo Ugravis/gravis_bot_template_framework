@@ -30,6 +30,9 @@ export interface CoreConfig {
     paths: {
       features: string
       featuresEvents: string
+    },
+    database: {
+      port: number
     }
   }
 }
