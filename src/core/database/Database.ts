@@ -1,7 +1,7 @@
 import { EntityManager, MariaDbDriver, MikroORM, MySqlConnection } from "@mikro-orm/mariadb";
 import { MyClient } from "../client/MyClient";
 import { Options } from "@mikro-orm/core";
-import { Guild } from "@/features/guilds/models/Guild";
+import { Guild } from "@/features/guilds/database/Guild.entity";
 
 export class DatabaseManager {
   private orm!: MikroORM

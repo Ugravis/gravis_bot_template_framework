@@ -1,7 +1,9 @@
 import { BaseEvent } from "@/core/classes/BaseEvent";
 import { BaseSlashCommand } from "@/core/classes/BaseSlashCommand";
+import { EventInteraction } from "@/core/classes/decorators/EventInteraction";
 import { BaseInteraction } from "discord.js";
 
+@EventInteraction()
 export default class InteractionCreate extends BaseEvent<[BaseInteraction]> {
   name: string = 'interactionCreate'
   description: string = "réception d'une interaction Discord"

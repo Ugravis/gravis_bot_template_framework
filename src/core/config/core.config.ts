@@ -84,7 +84,7 @@ export const coreConfig: CoreConfig = {
   code: {
     paths: {
       features: "src/features",
-      featuresEvents: "src/features/events"
+      // featuresEvents: "src/features/events"
     },
     database: {
       port: 3306

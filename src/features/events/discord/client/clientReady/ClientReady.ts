@@ -1,7 +1,9 @@
 import { getClientGuild, getClientGuildTextChannel } from "@/shared/functions/discord/discordBasics"
+import { EventInteraction } from "@/core/classes/decorators/EventInteraction"
 import { BaseEvent } from "@/core/classes/BaseEvent"
 import { Client } from "discord.js"
 
+@EventInteraction()
 export default class ClientReadyEvent extends BaseEvent<[Client]> {
   name: string = 'clientReady'
   description: string = 'Démarrage du bot'

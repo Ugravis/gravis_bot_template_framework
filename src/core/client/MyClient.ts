@@ -33,7 +33,7 @@ export class MyClient extends Client {
       await this.database.init()
 
       await this.interactionsManager.loadAll(join(process.cwd(), this.coreConfig.code.paths.features))
-      await this.eventsManager.loadAll(join(process.cwd(), this.coreConfig.code.paths.featuresEvents))
+      this.eventsManager.init()
 
       await this.login(
         this.isDevEnv()
