@@ -1,6 +1,7 @@
 import { EntityManager, MariaDbDriver, MikroORM, MySqlConnection } from "@mikro-orm/mariadb";
 import { MyClient } from "../client/MyClient";
 import { Options } from "@mikro-orm/core";
+import { Guild } from "@/features/guilds/models/Guild";
 
 export class DatabaseManager {
   private orm!: MikroORM
@@ -14,7 +15,7 @@ export class DatabaseManager {
       password: this.client.isDevEnv() ? process.env.DEV_DB_PASSWORD! : process.env.PROD_DB_PASSWORD!,
       host: this.client.isDevEnv() ? process.env.DEV_DB_HOST! : process.env.PROD_DB_HOST!,
       port: this.client.coreConfig.code.database.port,
-      entities: []
+      entities: [Guild]
     }
   }
 
