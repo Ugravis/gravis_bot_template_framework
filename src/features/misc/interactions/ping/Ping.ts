@@ -1,6 +1,8 @@
 import { BaseSlashCommand } from "@/core/classes/BaseSlashCommand";
+import { SlashCommandInteraction } from "@/core/classes/decorators/SlashCommandInteraction";
 import { CacheType, ChatInputCommandInteraction } from "discord.js";
 
+@SlashCommandInteraction()
 export default class Ping extends BaseSlashCommand {
   name: string = `ping`
   description: string = `renvoie la latence du bot`
