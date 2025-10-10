@@ -11,7 +11,7 @@ export class InteractionsManager {
   constructor(private client: MyClient) {}
 
   public async init(featuresPath: string): Promise<void> {
-    await loadFoldersFiles(featuresPath, ['events'])
+    await loadFoldersFiles(featuresPath, ["events", "database"])
 
     for (const SlashCmdClass of SLASH_COMMAND_INTERACTIONS) {
       const slashCmd = Container.get<BaseSlashCommand>(SlashCmdClass)

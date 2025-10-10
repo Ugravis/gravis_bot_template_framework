@@ -3,7 +3,6 @@ import { CoreConfig, EnvConfig } from '../config/core.config.types'
 import { coreConfig } from '../config/core.config'
 import { InteractionsManager } from '../managers/InteractionsManager'
 import { EventsManager } from '../managers/EventsManager'
-import { join } from "path"
 import { LoggerManager } from '../managers/LoggerManager'
 import { DatabaseManager } from '../database/Database'
 
@@ -14,7 +13,7 @@ export class MyClient extends Client {
   public interactionsManager: InteractionsManager
   private nodeEnv: string | undefined = process.env.NODE_ENV
   public logger!: LoggerManager
-  public database!: DatabaseManager
+  public db!: DatabaseManager
 
   constructor() {
     super({
@@ -25,12 +24,12 @@ export class MyClient extends Client {
     this.eventsManager = new EventsManager(this)
     this.interactionsManager = new InteractionsManager(this)
     this.logger = new LoggerManager(this)
-    this.database = new DatabaseManager(this)
+    this.db = new DatabaseManager(this)
   }
   
   public async init(): Promise<void> {
     try {
-      await this.database.init()
+      await this.db.init(this.coreConfig.code.paths.features)
 
       await this.interactionsManager.init(this.coreConfig.code.paths.features)
       await this.eventsManager.init(this.coreConfig.code.paths.featuresEvents)

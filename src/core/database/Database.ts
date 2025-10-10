@@ -2,10 +2,13 @@ import { EntityManager, MariaDbDriver, MikroORM, MySqlConnection } from "@mikro-
 import { MyClient } from "../client/MyClient";
 import { Options } from "@mikro-orm/core";
 import { Guild } from "@/features/guilds/database/Guild.entity";
+import { DbServicesManager } from "../managers/dbServicesManager";
+import { CoreConfigServices } from "../config/core.config";
 
 export class DatabaseManager {
   private orm!: MikroORM
   private em!: EntityManager
+  public servicesManager!: DbServicesManager<CoreConfigServices>
   private mikroConfig: Options<MariaDbDriver>
 
   constructor(private client: MyClient) {
@@ -19,11 +22,17 @@ export class DatabaseManager {
     }
   }
 
-  public async init() {
+  public async init(featuresFolder: string) {
     try {
       this.orm = await MikroORM.init(this.mikroConfig)
       this.em = this.orm.em.fork()
+      
+      //
+      this.servicesManager = new DbServicesManager<CoreConfigServices>(this, this.client.coreConfig.code.database.services as CoreConfigServices)
+      this.servicesManager.init()
+      
       console.log("✅ Database connected")
+
     } catch (err) {
       await this.client.logger.error("Database connection", err)
     }

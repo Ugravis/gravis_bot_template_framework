@@ -1,7 +1,22 @@
 import { ActivityType, GatewayIntentBits, Status } from "discord.js";
 import { CoreConfig } from "./core.config.types";
+import { GuildService } from "@/features/guilds/database/Guild.service";
+
+const dbServices = {
+  guild: GuildService,
+} 
 
 export const coreConfig: CoreConfig = {
+  code: {
+    paths: {
+      features: "src/features",
+      featuresEvents: "src/features/events"
+    },
+    database: {
+      port: 3306,
+      services: dbServices
+    }
+  },
   globals: {
     infos: {
       version: `0.0.0`
@@ -80,14 +95,7 @@ export const coreConfig: CoreConfig = {
         channelId: "1418608432856170547"
       }
     }
-  },
-  code: {
-    paths: {
-      features: "src/features",
-      featuresEvents: "src/features/events"
-    },
-    database: {
-      port: 3306
-    }
   }
-}
+} as const
+
+export type CoreConfigServices = typeof dbServices

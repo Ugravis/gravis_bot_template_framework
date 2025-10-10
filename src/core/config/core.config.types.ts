@@ -1,6 +1,16 @@
 import { ActivityOptions, GatewayIntentBits, PresenceStatusData } from "discord.js"
 
 export interface CoreConfig {
+  code: {
+    paths: {
+      features: string
+      featuresEvents: string
+    },
+    database: {
+      port: number,
+      services: Record<string, new (...args: any[]) => any>
+    }
+  }
   globals: {
     infos: {
       version: string
@@ -26,16 +36,7 @@ export interface CoreConfig {
   }
   dev: EnvConfig
   prod: EnvConfig
-  code: {
-    paths: {
-      features: string
-      featuresEvents: string
-    },
-    database: {
-      port: number
-    }
-  }
-}
+} 
 
 export interface EnvConfig {
   presence: {
