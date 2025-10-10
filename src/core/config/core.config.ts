@@ -1,9 +1,15 @@
 import { ActivityType, GatewayIntentBits, Status } from "discord.js";
 import { CoreConfig } from "./core.config.types";
 import { GuildService } from "@/features/guilds/database/Guild.service";
+import { Guild } from "@/features/guilds/database/Guild.entity";
 
-const dbServices = {
-  guild: GuildService,
+const dbItems = {
+  services: {
+    guild: GuildService,
+  },
+  entities: [
+    Guild
+  ]
 } 
 
 export const coreConfig: CoreConfig = {
@@ -14,7 +20,8 @@ export const coreConfig: CoreConfig = {
     },
     database: {
       port: 3306,
-      services: dbServices
+      entities: dbItems.entities,
+      services: dbItems.services
     }
   },
   globals: {
@@ -98,4 +105,5 @@ export const coreConfig: CoreConfig = {
   }
 } as const
 
-export type CoreConfigServices = typeof dbServices
+export type CoreConfigEntities = typeof dbItems.entities
+export type CoreConfigServices = typeof dbItems.services

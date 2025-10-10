@@ -8,6 +8,7 @@ export interface CoreConfig {
     },
     database: {
       port: number,
+      entities: (new (...args: any[]) => any)[]
       services: Record<string, new (...args: any[]) => any>
     }
   }

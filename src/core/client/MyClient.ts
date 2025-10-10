@@ -29,7 +29,7 @@ export class MyClient extends Client {
   
   public async init(): Promise<void> {
     try {
-      await this.db.init(this.coreConfig.code.paths.features)
+      await this.db.init()
 
       await this.interactionsManager.init(this.coreConfig.code.paths.features)
       await this.eventsManager.init(this.coreConfig.code.paths.featuresEvents)
