@@ -1,20 +1,13 @@
+import 'reflect-metadata'
 import dotenv from 'dotenv'
+import Container from 'typedi'
+import { MyClient } from './core/MyClient'
+
 dotenv.config({ quiet: true })
 
-import { Client, Events, GatewayIntentBits } from 'discord.js'
+async function bootstrap() {
+  const client = Container.get(MyClient)
+  await client.init()
+}
 
-const client = new Client({ 
-  intents: [
-    GatewayIntentBits.Guilds,
-    GatewayIntentBits.GuildMessages,
-    GatewayIntentBits.GuildMembers,
-    GatewayIntentBits.MessageContent,
-    GatewayIntentBits.GuildPresences
-  ] 
-})
-
-client.once(Events.ClientReady, (readyClient) => {
-	console.log(`Ready! Logged in as ${readyClient.user.tag}`)
-})
-
-client.login(process.env.DEV_BOT_TOKEN)
+bootstrap().catch(console.error)
