@@ -10,5 +10,6 @@ export default class Ping extends BaseSlashCommand {
 
   async execute(interaction: ChatInputCommandInteraction<CacheType>): Promise<void> {
     interaction.reply('Pong')
+    // this.client.db.servicesManager.services.guild.findById
   }
 }
