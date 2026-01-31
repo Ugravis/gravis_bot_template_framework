@@ -25,6 +25,7 @@ export class Client {
         ? process.env.PROD_BOT_TOKEN 
         : process.env.DEV_BOT_TOKEN
     )
+    this.isConnected = true
   }
 
   public async disconnect(): Promise<void> {

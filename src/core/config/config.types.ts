@@ -23,11 +23,11 @@ export interface EnvConfig {
     prefix: string
   }
   discordLogChannels: {
-    ready: DiscordLogChannelConfig
+    ready: DiscordChannelConfig
   }
 }
 
-interface DiscordLogChannelConfig {
+export interface DiscordChannelConfig {
   guildId: string
   channelId: string
 }

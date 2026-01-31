@@ -1,6 +1,6 @@
 import { Container } from "typedi"
 import { BaseEvent } from "@/core/classes/BaseEvent"
-import { filesDiscovery } from "@/shared/functions/system/filesDiscovery"
+import { filesDiscovery } from "@/shared/utils/system/filesDiscovery"
 import { DISCORD_EVENT_METADADA } from "../classes/decorators/DiscordEventDecorator"
 import { ClientEvents, Client } from "discord.js"
 import { ConfigManager } from "./ConfigManager"
