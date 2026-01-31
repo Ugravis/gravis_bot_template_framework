@@ -3,14 +3,18 @@ import { BaseEvent } from "@/core/classes/BaseEvent"
 import { filesDiscovery } from "@/shared/functions/system/filesDiscovery"
 import { DISCORD_EVENT_METADADA } from "../classes/decorators/DiscordEventDecorator"
 import { ClientEvents, Client } from "discord.js"
+import { ConfigManager } from "./ConfigManager"
 
 export class EventManager {
   private readonly registeredEvents: Map<string, BaseEvent<any>> = new Map()
 
-  constructor(private readonly client: Client) {}
+  constructor(
+    private readonly config: ConfigManager,
+    private readonly client: Client
+  ) {}
 
   public async init(): Promise<void> {
-    await filesDiscovery('/src/features')
+    await filesDiscovery(this.config.code.paths.eventsFeatures)
     
     for(const EventClass of DISCORD_EVENT_METADADA) {
       await this.registerEvent(EventClass)

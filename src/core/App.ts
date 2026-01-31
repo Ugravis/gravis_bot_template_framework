@@ -1,13 +1,21 @@
 import { Client } from "@/core/Client";
 import { EventManager } from "@/core/managers/EventManager";
+import { ConfigManager } from "./managers/ConfigManager";
 
 export class App {
+  private readonly configManager: ConfigManager
   private readonly client: Client
   private readonly eventManager: EventManager
 
   constructor() {
-    this.client = new Client()
-    this.eventManager = new EventManager(this.client.getNativeClient())
+    this.configManager = new ConfigManager()
+    this.client = new Client(
+      this.configManager
+    )
+    this.eventManager = new EventManager(
+      this.configManager,
+      this.client.getNativeClient()
+    )
     this.setupGracefulShutdown()
   }
 

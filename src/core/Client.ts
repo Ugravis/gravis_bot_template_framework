@@ -1,10 +1,13 @@
 import { Client as DiscordClient, Events, GatewayIntentBits } from "discord.js"
+import { ConfigManager } from "./managers/ConfigManager"
 
 export class Client {
   private readonly client: DiscordClient
   private isConnected: boolean = false
 
-  constructor() {
+  constructor(
+    private readonly config: ConfigManager
+  ) {
     this.client = new DiscordClient({
       intents: [
         GatewayIntentBits.Guilds,
@@ -17,7 +20,11 @@ export class Client {
   }
 
   public async connect(): Promise<void> {
-    await this.client.login(process.env.DEV_BOT_TOKEN)
+    await this.client.login(
+      this.config.isProduction 
+        ? process.env.PROD_BOT_TOKEN 
+        : process.env.DEV_BOT_TOKEN
+    )
   }
 
   public async disconnect(): Promise<void> {

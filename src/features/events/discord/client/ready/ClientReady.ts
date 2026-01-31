@@ -1,5 +1,6 @@
 import { BaseEvent } from "@/core/classes/BaseEvent";
 import { DiscordEvent } from "@/core/classes/decorators/DiscordEventDecorator";
+import { config } from "@/core/managers/ConfigManager";
 import { Client, Events } from "discord.js";
 
 @DiscordEvent()
@@ -12,6 +13,6 @@ export class ClientReady extends BaseEvent<Events.ClientReady> {
   }
 
   async execute(client: Client<true>): Promise<void> {
-    console.log(`✅ Discord client ready as ${client.user.tag}`)
+    console.log(`✅ Discord client ready as ${client.user.tag} - v${config.common.infos.version}`)
   }
 }
