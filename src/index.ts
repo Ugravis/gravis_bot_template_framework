@@ -1,13 +1,17 @@
 import 'reflect-metadata'
 import dotenv from 'dotenv'
-import Container from 'typedi'
-import { MyClient } from './core/MyClient'
+import { App } from '@/core/App'
 
 dotenv.config({ quiet: true })
 
-async function bootstrap() {
-  const client = Container.get(MyClient)
-  await client.init()
+async function bootstrap(): Promise<void> {
+  const app = new App()
+
+  try { await app.start() } 
+  catch (e) { 
+    console.error(`Bootsrap error: `, e) 
+    process.exit(1)
+  }
 }
 
-bootstrap().catch(console.error)
+bootstrap()
