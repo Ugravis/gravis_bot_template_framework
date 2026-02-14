@@ -1,11 +1,13 @@
 import { AppContext } from "./AppContext";
 import { DiscordClient } from "./DiscordClient";
 import { ConfigManager } from "./managers/ConfigManager";
+import { EventsManager } from "./managers/EventsManager";
 import { Logger } from "./managers/LoggerManager";
 
 export class App {
   private discordClient: DiscordClient
   private context!: AppContext
+  private eventsManager!: EventsManager
 
   constructor() {
     this.discordClient = new DiscordClient()
@@ -19,6 +21,9 @@ export class App {
       logger,
       config
     }
+
+    this.eventsManager = new EventsManager(this.context, this.discordClient)
+    await this.eventsManager.init()
 
     await this.discordClient.connect(this.context.config.token)
 
