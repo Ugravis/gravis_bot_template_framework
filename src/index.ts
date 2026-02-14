@@ -1,12 +1,14 @@
 import dotenv from 'dotenv'
-import { Client, Events, GatewayIntentBits } from 'discord.js'
+import { App } from './core/App'
 
 dotenv.config({ quiet: true })
 
-const client = new Client({ intents: [GatewayIntentBits.Guilds] })
+async function bootstrap() {
+  const app = new App()
+  await app.init()
+}
 
-client.once(Events.ClientReady, (client: Client) => {
-	console.log(`Ready! as ${client.user?.tag}`)
+bootstrap().catch(e => { 
+  console.log(`Failed to load application: `, e) 
+  process.exit(1)
 })
-
-client.login(process.env.DEV_BOT_TOKEN)
