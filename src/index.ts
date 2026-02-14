@@ -1,17 +1,12 @@
-import 'reflect-metadata'
 import dotenv from 'dotenv'
-import { App } from '@/core/App'
+import { Client, Events, GatewayIntentBits } from 'discord.js'
 
 dotenv.config({ quiet: true })
 
-async function bootstrap(): Promise<void> {
-  const app = new App()
+const client = new Client({ intents: [GatewayIntentBits.Guilds] })
 
-  try { await app.start() } 
-  catch (e) { 
-    console.error(`Bootsrap error: `, e) 
-    process.exit(1)
-  }
-}
+client.once(Events.ClientReady, (client: Client) => {
+	console.log(`Ready! as ${client.user?.tag}`)
+})
 
-bootstrap()
+client.login(process.env.DEV_BOT_TOKEN)
