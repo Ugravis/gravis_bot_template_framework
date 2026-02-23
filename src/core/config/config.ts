@@ -1,5 +1,5 @@
 import { CoreConfig } from "@/core/config/config.types"
-import { ActivityType } from "discord.js"
+import { ActivityType, GatewayIntentBits } from "discord.js"
 
 export const CORE_CONFIG: CoreConfig = {
   code: {
@@ -12,6 +12,15 @@ export const CORE_CONFIG: CoreConfig = {
   common: {
     infos: {
       version: 0
+    },
+    discordSystem: {
+      intents: [
+        GatewayIntentBits.Guilds,
+        GatewayIntentBits.GuildMessages,
+        GatewayIntentBits.GuildMembers,
+        GatewayIntentBits.MessageContent,
+        GatewayIntentBits.GuildPresences
+      ]
     }
   },
 

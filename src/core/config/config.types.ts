@@ -1,4 +1,4 @@
-import { ActivityOptions, ClientPresenceStatus } from "discord.js"
+import { ActivityOptions, ClientPresenceStatus, GatewayIntentBits } from "discord.js"
 
 export interface CoreConfig {
   code: CodeConfig
@@ -10,6 +10,9 @@ export interface CoreConfig {
 export interface CommonConfig {
   infos: {
     version: number
+  }
+  discordSystem: {
+    intents: GatewayIntentBits[]
   }
 }
 

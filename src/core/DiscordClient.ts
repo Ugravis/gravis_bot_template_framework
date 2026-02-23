@@ -1,15 +1,16 @@
 import { Client, GatewayIntentBits } from "discord.js";
 import { singleton } from "tsyringe";
+import { ConfigManager } from "./managers/ConfigManager";
 
 @singleton()
 export class DiscordClient {
   public readonly clientInstance: Client
 
-  constructor() {
+  constructor(
+    private readonly config: ConfigManager
+  ) {
     this.clientInstance = new Client({
-      intents: [
-        GatewayIntentBits.Guilds
-      ]
+      intents: config.common.discordSystem.intents
     })
   }
 
