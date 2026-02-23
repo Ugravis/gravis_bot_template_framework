@@ -111,5 +111,13 @@
     /* Completeness */
     // "skipDefaultLibCheck": true,                      /* Skip type checking .d.ts files that are included with TypeScript. */
     "skipLibCheck": true                                 /* Skip type checking all .d.ts files. */
+  },
+  "ts-node": {
+    "transpileOnly": false,
+    "require": ["reflect-metadata"],
+    "compilerOptions": {
+      "module": "CommonJS",
+      "moduleResolution": "node"
+    }
   }
 }

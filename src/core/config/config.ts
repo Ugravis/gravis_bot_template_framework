@@ -1,4 +1,4 @@
-import { CoreConfig } from "./config.types";
+import { CoreConfig } from "@/core/config/config.types"
 
 export const CORE_CONFIG: CoreConfig = {
   code: {

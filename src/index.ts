@@ -1,10 +1,12 @@
+import "reflect-metadata"
 import dotenv from 'dotenv'
-import { App } from './core/App'
+import { App } from '@/core/App'
+import { container } from "tsyringe"
 
 dotenv.config({ quiet: true })
 
 async function bootstrap() {
-  const app = new App()
+  const app = container.resolve(App)
   await app.init()
 }
 

@@ -1,22 +1,26 @@
 import { loadFoldersFiles } from "@/shared/utils/system/fileLoader";
-import { AppContext } from "../AppContext"
-import { DiscordClient } from "../DiscordClient"
-import { BaseEvent } from "../classes/BaseEvent";
+import { DiscordClient } from "@/core/DiscordClient"
+import { BaseEvent } from "@/core/classes/BaseEvent";
+import { container, singleton } from "tsyringe";
+import { Logger } from "@/core/managers/LoggerManager";
+import { ConfigManager } from "@/core/managers/ConfigManager";
 
+@singleton()
 export class EventsManager {
   private registeredEvents: BaseEvent<any>[] = []
 
   constructor(
-    private context: AppContext,
-    private discordClient: DiscordClient
+    private readonly logger: Logger,
+    private readonly config: ConfigManager,
+    private readonly discordClient: DiscordClient
   ) {}
 
   public async init(): Promise<void> {
-    const eventsPath = this.context.config.code.paths.eventsFeatures
+    const eventsPath = this.config.code.paths.eventsFeatures
     const eventClasses = await loadFoldersFiles<BaseEvent<any>>(eventsPath)
 
     for (const EventClass of eventClasses) {
-      const instance = new EventClass(this.context)
+      const instance = container.resolve(EventClass)
 
       if (!(instance instanceof BaseEvent)) continue
 
@@ -33,9 +37,9 @@ export class EventsManager {
       }
       
       this.registeredEvents.push(instance)
-      this.context.logger.info(`Event loaded: ${instance.name}`)
+      this.logger.info(`Event loaded: ${instance.name}`)
     }
-    this.context.logger.info(`Total of ${this.registeredEvents.length} events loaded`)
+    this.logger.info(`Total of ${this.registeredEvents.length} events loaded`)
   }
 
   public get loadedEvents() {

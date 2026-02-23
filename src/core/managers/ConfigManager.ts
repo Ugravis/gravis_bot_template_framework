@@ -1,6 +1,8 @@
-import { CORE_CONFIG } from "../config/config";
-import { CodeConfig, CommonConfig, CoreConfig, EnvConfig } from "../config/config.types";
+import { singleton } from "tsyringe";
+import { CORE_CONFIG } from "@/core/config/config";
+import { CodeConfig, CommonConfig, CoreConfig, EnvConfig } from "@/core/config/config.types";
 
+@singleton()
 export class ConfigManager {
   private readonly config: CoreConfig = CORE_CONFIG
   private readonly isProd: boolean = process.env.NODE_ENV === 'production'
@@ -31,5 +33,3 @@ export class ConfigManager {
       : process.env.DEV_BOT_TOKEN!
   }
 }
-
-export const config = new ConfigManager()

@@ -1,6 +1,5 @@
 import { readdirSync, statSync } from 'fs'
 import { join } from 'path'
-import { pathToFileURL } from 'url'
 
 export async function loadFoldersFiles<T>(
   path: string,
@@ -21,7 +20,7 @@ export async function loadFoldersFiles<T>(
       classes = [...classes, ...subClasses]
     
     } else if (entry.endsWith('.ts') || entry.endsWith('.js')) {
-      const module = await import(pathToFileURL(fullPath).href)
+      const module = await import(fullPath)
       const ExportedClass = module.default
 
       if (ExportedClass && typeof ExportedClass === 'function') {
