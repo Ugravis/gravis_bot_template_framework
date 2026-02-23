@@ -19,12 +19,14 @@ export default class ClientReady extends BaseEvent<Events.ClientReady> {
   }
 
   public async execute(client: Client<true>): Promise<void> {
-    this.logger.info(`${client.user.tag} (id: ${client.user.id}): ${this.name} event`)
+    client.user.setPresence(this.config.env.presence)
 
-    this.discordUtils.sendClientConfigMessage(
+    await this.discordUtils.sendClientConfigMessage(
       this.config.env.discordLogChannels.ready, { 
         content: "I'm ready" 
       }
     )
+
+    this.logger.info(`${client.user.tag} (id: ${client.user.id}): ${this.name} event`)
   }
 }

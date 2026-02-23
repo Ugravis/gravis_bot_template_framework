@@ -1,4 +1,5 @@
 import { CoreConfig } from "@/core/config/config.types"
+import { ActivityType } from "discord.js"
 
 export const CORE_CONFIG: CoreConfig = {
   code: {
@@ -18,6 +19,16 @@ export const CORE_CONFIG: CoreConfig = {
     defaultData: {
       prefix: '*'
     },
+    presence: {
+      status: "online",
+      activities: [
+        {
+          type: ActivityType.Watching,
+          name: "Incredible template framework [DEV]",
+          url: "https://ugravis.com"
+        }
+      ]
+    },
     discordLogChannels: {
       ready: {
         guildId: "800287894073245706",
@@ -29,6 +40,16 @@ export const CORE_CONFIG: CoreConfig = {
   prod: {
     defaultData: {
       prefix: '.'
+    },
+    presence: {
+      status: "online",
+      activities: [
+        {
+          type: ActivityType.Watching,
+          name: "Incredible template framework [ON DEV]",
+          url: "https://ugravis.com"
+        }
+      ]
     },
     discordLogChannels: {
       ready: {

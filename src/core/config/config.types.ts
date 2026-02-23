@@ -1,3 +1,5 @@
+import { ActivityOptions, ClientPresenceStatus } from "discord.js"
+
 export interface CoreConfig {
   code: CodeConfig
   common: CommonConfig
@@ -21,6 +23,10 @@ export interface CodeConfig {
 export interface EnvConfig {
   defaultData: {
     prefix: string
+  }
+  presence: {
+    status: ClientPresenceStatus
+    activities: ActivityOptions[]
   }
   discordLogChannels: {
     ready: DiscordChannelConfig

@@ -26,7 +26,6 @@ export class DiscordUtils {
     const guild = this.getClientGuild(chanAddress.guildId)
     if (!guild) return undefined
 
-
     const channel: GuildBasedChannel | undefined = guild.channels.cache.get(chanAddress.channelId);
     if (!channel) {
       this.logger.warn(`Channel not found: ${chanAddress.guildId}/${chanAddress.channelId}`)
@@ -37,7 +36,6 @@ export class DiscordUtils {
       this.logger.warn(`Channel is not text-based: ${chanAddress.guildId}/${chanAddress.channelId}`)
       return undefined
     }
-
     return channel
   }
 
