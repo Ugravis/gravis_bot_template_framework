@@ -1,13 +1,14 @@
 import { Guild, GuildMember, Message, TextBasedChannel, User, MessageCreateOptions } from "discord.js";
 import { BaseCommandCtx, ContextReplyOptions } from "./BaseCommandCtx";
+import { BaseCommand } from "../BaseCommand";
 
-export class prefixCommandContext extends BaseCommandCtx {
+export class PrefixCommandContext extends BaseCommandCtx {
   public readonly type = 'prefix' as const
 
   constructor(
     public readonly message: Message,
     public readonly args: string[],
-    private readonly argsOrder: string[] = []
+    private readonly command: BaseCommand
   ) { super() }
 
   get author(): User { return this.message.author }
@@ -56,10 +57,9 @@ export class prefixCommandContext extends BaseCommandCtx {
   }
 
   private getArg(name: string): string | undefined {
-    const index = this.argsOrder.indexOf(name)
-    return index === -1
-      ? undefined
-      : this.args[index]
+    const options = this.command.slashBuilder().options
+    const index = options.findIndex((opt: any) => opt.name === name)
+    return index === -1 ? undefined : this.args[index]
   }
 
   private normalise(options:ContextReplyOptions | string):MessageCreateOptions {
