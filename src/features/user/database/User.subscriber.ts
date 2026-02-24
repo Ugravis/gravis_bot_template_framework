@@ -4,6 +4,7 @@ import { User } from "./User.entity"
 import { Logger } from "@/core/managers/LoggerManager"
 import { EmbedBuilder } from "discord.js"
 import { ConfigManager } from "@/core/managers/ConfigManager"
+import { dbBaseLogComponent } from "@/shared/utils/discord/components/logComponents"
 
 @injectable()
 export class UserSubscriber implements EventSubscriber<User> {
@@ -26,16 +27,8 @@ export class UserSubscriber implements EventSubscriber<User> {
     this.logger.discord(
       this.config.env.discordLogChannels.database,
       {
-        embeds: [
-          new EmbedBuilder()
-            .setColor(0x57F287)
-            .setTitle('New user')
-            .addFields(
-              { name: 'Id', value: user.id.toString(), inline: true },
-              { name: 'Username', value: user.discordUsername, inline: true },
-              { name: 'Discord ID', value: user.discordId, inline: true }
-            )
-            .setTimestamp()
+        components: [
+          dbBaseLogComponent('create', user, `<@${user.discordId}>`)
         ]
       }
     )

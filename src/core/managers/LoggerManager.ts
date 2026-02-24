@@ -1,5 +1,5 @@
 import { DiscordUtils } from "@/shared/utils/discord/DiscordUtils"
-import { EmbedBuilder } from "discord.js"
+import { ContainerBuilder } from "discord.js"
 import { delay, inject, singleton } from "tsyringe"
 import { DiscordChannelConfig } from "../config/config.types"
 import chalk, { ChalkInstance } from "chalk"
@@ -11,28 +11,28 @@ interface LogLevel {
   fontColor: typeof chalk
 }
 
-type DbType = 'create' | 'update' | 'delete'
+export type DbType = 'create' | 'update' | 'delete'
 
 const INFO:  LogLevel = { name: 'info', bgColor: chalk.bgGreen, fontColor: chalk.green }
 const WARN:  LogLevel = { name: 'warn', bgColor: chalk.bgYellow, fontColor: chalk.yellow }
 const ERROR: LogLevel = { name: 'error', bgColor: chalk.bgRed, fontColor: chalk.red }
 const DB:    LogLevel = { name: 'db', bgColor: chalk.bgMagenta, fontColor: chalk.magenta }
 
-interface BufferedEmbed {
-  embed: EmbedBuilder
+interface BufferedComponent {
+  component: ContainerBuilder
   channel: DiscordChannelConfig 
 }
 
 interface DiscordLogOptions {
-  embeds: EmbedBuilder[]
+  components: ContainerBuilder[]
 }
 
 @singleton()
 export class Logger {
-  private buffer: BufferedEmbed[] = []
+  private buffer: BufferedComponent[] = []
   private timer: NodeJS.Timeout | null = null
   private readonly DEBOUNCE_MS = 3000
-  private readonly MAX_EMBEDS_PER_MESSAGE = 10
+  private readonly MAX_COMPONENTS_PER_MESSAGE = 10
 
   constructor(
     @inject(delay(() => DiscordUtils))
@@ -88,7 +88,7 @@ export class Logger {
     channel: DiscordChannelConfig, 
     options: DiscordLogOptions
   ): void {
-    this.buffer.push(...options.embeds.map(embed => ({ embed, channel })))
+    this.buffer.push(...options.components.map(component => ({ component, channel })))
     if (this.timer) clearTimeout(this.timer)
     this.timer = setTimeout(() => this.flushDiscord(), this.DEBOUNCE_MS)
   }
@@ -105,14 +105,14 @@ export class Logger {
       if (!acc[key]) acc[key] = []
       acc[key].push(item)
       return acc
-    }, {} as Record<string, BufferedEmbed[]>)
+    }, {} as Record<string, BufferedComponent[]>)
 
     for (const group of Object.values(byChannel)) {
-      const embeds = group.map(i => i.embed)
+      const components = group.map(i => i.component)
       const channel = group[0].channel
 
-      for (const chunk of this.chunk(embeds, this.MAX_EMBEDS_PER_MESSAGE)) {
-        await this.discordUtils.sendClientConfigMessage(channel, { embeds: chunk })
+      for (const chunk of this.chunk(components, this.MAX_COMPONENTS_PER_MESSAGE)) {
+        await this.discordUtils.sendClientConfigMessage(channel, { components: chunk, flags: ['IsComponentsV2'] })
       }
     }
   }
