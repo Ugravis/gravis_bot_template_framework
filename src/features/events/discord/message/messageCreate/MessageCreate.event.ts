@@ -3,6 +3,8 @@ import { PrefixCommandContext } from "@/core/classes/commandCtx/PrefixCommandCtx
 import { CommandsManager } from "@/core/managers/CommandsManager";
 import { ConfigManager } from "@/core/managers/ConfigManager";
 import { Logger } from "@/core/managers/LoggerManager";
+import { User as DbUser } from "@/features/user/database/User.entity";
+import { UserService } from "@/features/user/database/User.service";
 import { Events, Message, MessageType, OmitPartialGroupDMChannel } from "discord.js";
 import { injectable } from "tsyringe";
 
@@ -14,10 +16,13 @@ export default class MessageCreate extends BaseEvent<Events.MessageCreate> {
   constructor(
     private readonly config: ConfigManager,
     private readonly commandsManager: CommandsManager,
-    private readonly logger: Logger
+    private readonly logger: Logger,
+    private readonly userService: UserService
   ) { super() }
 
   public async execute(message: OmitPartialGroupDMChannel<Message<boolean>>): Promise<void> {
+    const dbUser: DbUser = await this.userService.upsert(message.author)
+
     if (message.author.bot || (message.type !== MessageType.Default)) return 
 
     const prefix = this.config.env.defaultData.prefix
@@ -34,6 +39,7 @@ export default class MessageCreate extends BaseEvent<Events.MessageCreate> {
 
     try {
       const cmdCtx = new PrefixCommandContext(message, args, cmd)
+      cmdCtx.dbUser = dbUser
 
       const argsValidation = cmd.validateRequiredArgs(cmdCtx)
       if (!argsValidation.valid) {

@@ -10,27 +10,27 @@ export default class PingCommand extends BaseCommand {
   public readonly scope = ['slash', 'prefix'] as const
   public readonly alias = ['p']
 
-  protected commandBuild(builder: SlashCommandBuilder) {
-    builder
-      .addStringOption(opt => opt
-        .setName('test')
-        .setDescription('desc du test')
-        .setRequired(true)
-      )
-      .addNumberOption(opt => opt
-        .setName('test2')
-        .setDescription('la desc2')
-        .setRequired(true)
-      )
-      .addNumberOption(opt => opt
-        .setName('test3')
-        .setDescription('lalllalala 3')
-        .setRequired(false)
-      )
-    return builder
-  }
+  // protected commandBuild(builder: SlashCommandBuilder) {
+  //   builder
+  //     .addStringOption(opt => opt
+  //       .setName('test')
+  //       .setDescription('desc du test')
+  //       .setRequired(true)
+  //     )
+  //     .addNumberOption(opt => opt
+  //       .setName('test2')
+  //       .setDescription('la desc2')
+  //       .setRequired(true)
+  //     )
+  //     .addNumberOption(opt => opt
+  //       .setName('test3')
+  //       .setDescription('lalllalala 3')
+  //       .setRequired(false)
+  //     )
+  //   return builder
+  // }
 
   public async execute(cmd: BaseCommandCtx): Promise<void> {
-    await cmd.reply({ content: 'Pong' })
+    await cmd.reply({ content: `Pong` })
   }
 }

@@ -1,4 +1,5 @@
 import { CoreConfig } from "@/core/config/config.types"
+import { User } from "@/features/user/database/User.entity"
 import { ActivityType, GatewayIntentBits } from "discord.js"
 
 export const CORE_CONFIG: CoreConfig = {
@@ -6,6 +7,11 @@ export const CORE_CONFIG: CoreConfig = {
     paths: {
       features: '/src/features',
       eventsFeatures: '/src/features/events'
+    },
+    database: {
+      entities: [
+        User
+      ]
     }
   },
 

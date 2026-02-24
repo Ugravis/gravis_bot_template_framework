@@ -32,6 +32,9 @@ export interface CodeConfig {
   paths: {
     features: string
     eventsFeatures: string
+  },
+  database: {
+    entities: (new (...args: any[]) => any)[]
   }
 }
 
@@ -51,4 +54,18 @@ export interface EnvConfig {
 export interface DiscordChannelConfig {
   guildId: string
   channelId: string
+}
+
+export const ENV_VAR_SCHEMA = {
+  'BOT_TOKEN': String,
+  'DB_NAME': String,
+  'DB_HOST': String,
+  'DB_USERNAME': String,
+  'DB_PASSWORD': String,
+  'DB_PORT': Number,
+} as const
+
+export type EnvVarSchema = {
+  [K in keyof typeof ENV_VAR_SCHEMA]: 
+    typeof ENV_VAR_SCHEMA[K] extends typeof Number ? number : string
 }

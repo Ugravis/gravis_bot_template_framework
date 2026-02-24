@@ -3,6 +3,7 @@ import { SlashCommandCtx } from "@/core/classes/commandCtx/SlashCommandCtx"
 import { CommandsManager } from "@/core/managers/CommandsManager"
 import { ConfigManager } from "@/core/managers/ConfigManager"
 import { Logger } from "@/core/managers/LoggerManager"
+import { UserService } from "@/features/user/database/User.service"
 import { CacheType, Events, Interaction, InteractionReplyOptions } from "discord.js"
 import { injectable } from "tsyringe"
 
@@ -12,9 +13,9 @@ export default class InteractionCreate extends BaseEvent<Events.InteractionCreat
   public readonly once = false
 
   constructor(
-    private readonly config: ConfigManager,
     private readonly commandsManager: CommandsManager,
-    private readonly logger: Logger
+    private readonly logger: Logger,
+    private readonly userService: UserService
   ) { super() }
 
   public async execute(interaction: Interaction<CacheType>): Promise<void> {
@@ -26,6 +27,8 @@ export default class InteractionCreate extends BaseEvent<Events.InteractionCreat
 
       try {
         const cmdCtx = new SlashCommandCtx(interaction)
+
+        cmdCtx.dbUser = await this.userService.upsert(interaction.user)
 
         const argsValidation = cmd.validateRequiredArgs(cmdCtx)
         if (!argsValidation.valid) {

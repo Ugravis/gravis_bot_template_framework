@@ -1,4 +1,5 @@
 import { Guild, GuildMember, InteractionReplyOptions, TextBasedChannel, User } from "discord.js"
+import { User as DbUser } from '@/features/user/database/User.entity'
 
 export interface ContextReplyOptions {
   content?: string
@@ -9,6 +10,8 @@ export interface ContextReplyOptions {
 
 export abstract class BaseCommandCtx {
   abstract readonly type: 'slash' | 'prefix'
+
+  public dbUser!: DbUser
 
   abstract get author(): User
   abstract get guild(): Guild | null

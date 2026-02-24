@@ -1,6 +1,6 @@
 ## Gravis Template Framework - for @discord.js bot
 
-> TypeScript, Tsyringe, Discordjs
+> TypeScript, TSyringe, Discordjs
 
 ```
 gravis_template

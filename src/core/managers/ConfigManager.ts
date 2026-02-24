@@ -1,6 +1,6 @@
 import { singleton } from "tsyringe";
 import { CORE_CONFIG } from "@/core/config/config";
-import { CodeConfig, CommonConfig, CoreConfig, EnvConfig } from "@/core/config/config.types";
+import { CodeConfig, CommonConfig, CoreConfig, ENV_VAR_SCHEMA, EnvConfig, EnvVarSchema } from "@/core/config/config.types";
 
 @singleton()
 export class ConfigManager {
@@ -25,11 +25,25 @@ export class ConfigManager {
     return this.isProd
   }
 
-  //
+  public getEnvVar<K extends keyof EnvVarSchema>(name: K): EnvVarSchema[K] {
+    const prefix = this.isProduction ? 'PROD_' : 'DEV_'
+    const fullName = `${prefix}${name}`
+    
+    const raw = process.env[fullName]
+    if (raw === undefined) throw new Error(`Missing env variable: ${fullName}`)
 
-  public get token(): string {
-    return this.isProduction
-      ? process.env.PROD_BOT_TOKEN!
-      : process.env.DEV_BOT_TOKEN!
+    if (this.isNumberKey(name)) {
+      const parsed = Number(raw)
+      if (Number.isNaN(parsed)) {
+        throw new Error(`Env variable ${fullName} must be a number`)
+      }
+      return parsed as EnvVarSchema[K]
+    }
+
+    return raw as EnvVarSchema[K]
+  }
+
+  private isNumberKey(name: keyof EnvVarSchema): boolean {
+    return ENV_VAR_SCHEMA[name] === Number
   }
 }
