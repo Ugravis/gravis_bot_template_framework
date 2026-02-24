@@ -23,4 +23,6 @@ export abstract class BaseCommandCtx {
   abstract getString(name: string, required?: boolean): string | null
   abstract getInteger(name: string, required?: boolean): number | null
   abstract getBoolean(name: string, required?: boolean): boolean | null
+  abstract getNumber(name: string, required?: boolean): number | null
+  abstract getUser(name: string, required?: boolean): User | null
 }

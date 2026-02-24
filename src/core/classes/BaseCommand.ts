@@ -42,17 +42,20 @@ export abstract class BaseCommand {
 
   public validateRequiredArgs(ctx: BaseCommandCtx): { valid: boolean, errors: string[] } {
     const errors: string[] = []
-    const requiredArgs = this.getRequiredArgs()
+    const allArgs = this.getArgs()
 
-    for (const arg of requiredArgs) {
-      const value = (ctx as any).getArg?.(arg.name)
-      if (!value) {
+    for (const arg of allArgs) {
+      if ((ctx as any).hasArg(arg.name)) {
+        const value = this.getArgValue(ctx, arg.type, arg.name)
+        
+        if (value === null && arg.required) {
+          errors.push(`\`${arg.name}\` (${this.getTypeLabel(arg.type)}) - manquant`)
+
+        } else if (value === null && !arg.required) {
+          errors.push(`\`${arg.name}\` (${this.getTypeLabel(arg.type)}) — format invalide`)
+        }
+      } else if (arg.required) {
         errors.push(`\`${arg.name}\` (${this.getTypeLabel(arg.type)}) - manquant`)
-        continue
-      }
-
-      if (!this.isValidType(value, arg.type)) {
-        errors.push(`\`${arg.name}\` (${this.getTypeLabel(arg.type)}) — format invalide`)
       }
     }
     return {
@@ -61,34 +64,20 @@ export abstract class BaseCommand {
     }
   }
 
-  private isValidType(value: string, type: number): boolean {
+  private getArgValue(ctx: BaseCommandCtx, type: number, name: string): any {
     switch (type) {
-      // Sring
-      case 3:
-        return value.length > 0
-
-      // Integer
-      case 4: 
-        const intVal = parseInt(value, 10)
-        return !isNaN(intVal) && Number.isInteger(intVal)
-
-      // Boolean
-      case 5:
-        return [
-          'true', '1', 'yes', 'oui', 
-          'false', '0', 'no', 'non'
-        ].includes(value.toLocaleLowerCase())
-
-      // User
-      case 6:
-        return /^<@!?(\d+)>$/.test(value)
-
-      // Number
-      case 10: 
-        return !isNaN(parseFloat(value))
-
+      case 3: // String
+        return ctx.getString(name)
+      case 4: // Integer
+        return ctx.getInteger(name)
+      case 5: // Boolean
+        return ctx.getBoolean(name)
+      case 6: // User
+        return ctx.getUser(name)
+      case 10: // Number
+        return ctx.getNumber(name)
       default:
-        return true
+        return null
     }
   }
 

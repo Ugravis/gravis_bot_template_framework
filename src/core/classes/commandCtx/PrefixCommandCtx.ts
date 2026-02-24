@@ -34,15 +34,24 @@ export class PrefixCommandContext extends BaseCommandCtx {
   getInteger(name: string): number | null {
     const val = this.getArg(name)
     if (val === undefined) return null
-    const parsed = parseInt(val, 10)
-    return isNaN(parsed) ? null : parsed
+    const num = Number(val)
+    if (!Number.isInteger(num)) return null
+    return num
+  }
+
+  getNumber(name: string): number | null {
+    const val = this.getArg(name)
+    if (val === undefined) return null
+    const num = Number(val)
+    if (Number.isNaN(num)) return null
+    return num
   }
 
   getBoolean(name: string): boolean | null {
     const val = this.getArg(name)?.toLowerCase()
     if (val === undefined) return null
-    if (val === 'true' || val === '1' || val === 'yes' || val === 'oui') return true
-    if (val === 'false' || val === '0' || val === 'no' || val === 'non') return false
+    if (['true', '1', 'yes', 'oui'].includes(val)) return true
+    if (['false', '0', 'no', 'non'].includes(val)) return false
     return null
   }
 
@@ -54,6 +63,10 @@ export class PrefixCommandContext extends BaseCommandCtx {
     if (!match) return null
 
     return this.message.client.users.cache.get(match[1]) ?? null
+  }
+
+  hasArg(name: string): boolean {
+    return this.getArg(name) !== undefined
   }
 
   private getArg(name: string): string | undefined {

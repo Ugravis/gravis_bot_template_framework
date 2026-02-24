@@ -40,6 +40,10 @@ export class SlashCommandCtx extends BaseCommandCtx {
     return this.interaction.options.getInteger(name, required)
   }
 
+  getNumber(name: string, required = false): number | null {
+    return this.interaction.options.getNumber(name, required)
+  }
+
   getBoolean(name: string, required = false): boolean | null {
     return this.interaction.options.getBoolean(name, required)
   }
@@ -59,5 +63,9 @@ export class SlashCommandCtx extends BaseCommandCtx {
 
     const { ephemeral, ...rest } = options
     return rest
+  }
+
+  hasArg(name: string): boolean {
+    return this.interaction.options.data.some(opt => opt.name === name)
   }
 }
