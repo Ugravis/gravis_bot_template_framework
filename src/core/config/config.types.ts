@@ -14,6 +14,18 @@ export interface CommonConfig {
   discordSystem: {
     intents: GatewayIntentBits[]
   }
+  developersList: {
+    userIds: {
+      main: string
+      others: string[]
+      all: string[]
+    }
+    guildIds: {
+      main: string
+      others: string[]
+      all: string[]
+    }
+  }
 }
 
 export interface CodeConfig {

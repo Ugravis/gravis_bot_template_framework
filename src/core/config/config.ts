@@ -21,6 +21,18 @@ export const CORE_CONFIG: CoreConfig = {
         GatewayIntentBits.MessageContent,
         GatewayIntentBits.GuildPresences
       ]
+    },
+    developersList: {
+      userIds: {
+        main: '645590628893196288',
+        others: ['665271214163361803'],
+        get all() { return [this.main, ...this.others] }
+      },
+      guildIds: {
+        main: '800287894073245706',
+        others: [],
+        get all() { return [this.main, ...this.others] }
+      }
     }
   },
 
