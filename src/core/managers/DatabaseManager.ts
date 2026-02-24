@@ -1,5 +1,5 @@
 import { EntityManager, MikroORM } from "@mikro-orm/mariadb";
-import { singleton } from "tsyringe";
+import { container, singleton } from "tsyringe";
 import { Logger } from "./LoggerManager";
 import { ConfigManager } from "./ConfigManager";
 
@@ -19,7 +19,8 @@ export class DatabaseManager {
       password: this.config.getEnvVar('DB_PASSWORD'),
       host: this.config.getEnvVar('DB_HOST'),
       port: this.config.getEnvVar('DB_PORT'),
-      entities: this.config.code.database.entities
+      entities: this.config.code.database.entities,
+      subscribers: this.config.code.database.subscribers.map(S => container.resolve(S))
     })
 
     const generator = this._orm.schema

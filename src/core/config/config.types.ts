@@ -34,7 +34,8 @@ export interface CodeConfig {
     eventsFeatures: string
   },
   database: {
-    entities: (new (...args: any[]) => any)[]
+    entities: (new (...args: any[]) => any)[],
+    subscribers: (new (...args: any[]) => any)[]
   }
 }
 
@@ -48,6 +49,7 @@ export interface EnvConfig {
   }
   discordLogChannels: {
     ready: DiscordChannelConfig
+    database: DiscordChannelConfig
   }
 }
 

@@ -1,4 +1,4 @@
-import { singleton } from "tsyringe"
+import { delay, inject, singleton } from "tsyringe"
 import { DiscordClient } from "@/core/DiscordClient"
 import { DiscordChannelConfig } from "@/core/config/config.types"
 import { Guild, GuildBasedChannel, MessageCreateOptions, SendableChannels, TextBasedChannel } from "discord.js"
@@ -7,8 +7,10 @@ import { Logger } from "@/core/managers/LoggerManager"
 @singleton()
 export class DiscordUtils {
   constructor(
+    @inject(delay(() => Logger))
+    private readonly logger: Logger,
+    @inject(delay(() => DiscordClient))
     private readonly discordClient: DiscordClient,
-    private readonly logger: Logger
   ) {}
 
 

@@ -1,7 +1,6 @@
-import { DatabaseManager } from "@/core/managers/DatabaseManager";
-import { EntityManager } from "@mikro-orm/mariadb";
-import { singleton } from "tsyringe";
-import { User } from "./User.entity";
+import { EntityManager } from "@mikro-orm/mariadb"
+import { singleton } from "tsyringe"
+import { User } from "./User.entity"
 
 @singleton()
 export class UserRepository {

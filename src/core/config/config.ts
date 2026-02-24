@@ -1,5 +1,6 @@
 import { CoreConfig } from "@/core/config/config.types"
 import { User } from "@/features/user/database/User.entity"
+import { UserSubscriber } from "@/features/user/database/User.subscriber"
 import { ActivityType, GatewayIntentBits } from "discord.js"
 
 export const CORE_CONFIG: CoreConfig = {
@@ -11,6 +12,9 @@ export const CORE_CONFIG: CoreConfig = {
     database: {
       entities: [
         User
+      ],
+      subscribers: [
+        UserSubscriber
       ]
     }
   },
@@ -60,6 +64,10 @@ export const CORE_CONFIG: CoreConfig = {
       ready: {
         guildId: "800287894073245706",
         channelId: "805198657351712788"
+      },
+      database: {
+        guildId: "800287894073245706",
+        channelId: "1243263368211726467"
       }
     }
   },
@@ -82,6 +90,10 @@ export const CORE_CONFIG: CoreConfig = {
       ready: {
         guildId: "800287894073245706",
         channelId: "805198657351712788"
+      },
+      database: {
+        guildId: "800287894073245706",
+        channelId: "1243263368211726467"
       }
     }
   }
