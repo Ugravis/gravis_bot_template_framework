@@ -1,4 +1,4 @@
-import { Guild, GuildMember, InteractionReplyOptions, TextBasedChannel, User } from "discord.js"
+import { Guild, GuildMember, InteractionReplyOptions, MessageFlags, TextBasedChannel, User } from "discord.js"
 import { User as DbUser } from '@/features/user/database/User.entity'
 
 export interface ContextReplyOptions {

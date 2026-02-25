@@ -13,4 +13,9 @@ export class UserRepository {
   async findById(em: EntityManager, id: number): Promise<User | null> {
     return em.findOne(User, id)
   }
+
+
+  async findAll(em: EntityManager): Promise<User[]> {
+    return em.findAll(User)
+  }
 }

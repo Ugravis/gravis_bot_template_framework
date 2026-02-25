@@ -1,5 +1,5 @@
 import { BaseCommandCtx, ContextReplyOptions } from "@/core/classes/commandCtx/BaseCommandCtx"
-import { ChatInputCommandInteraction, Guild, GuildMember, InteractionReplyOptions, InteractionEditReplyOptions, TextBasedChannel, User } from "discord.js"
+import { ChatInputCommandInteraction, Guild, GuildMember, InteractionReplyOptions, InteractionEditReplyOptions, TextBasedChannel, User, MessageFlags } from "discord.js"
 
 export class SlashCommandCtx extends BaseCommandCtx {
   public readonly type = 'slash' as const
@@ -53,7 +53,13 @@ export class SlashCommandCtx extends BaseCommandCtx {
   }
 
   private normalise(options: ContextReplyOptions | string): InteractionReplyOptions {
-    return typeof options === 'string' ? { content: options } : options
+    if (typeof options === 'string') return { content: options }
+
+    const result: InteractionReplyOptions = { ...options }
+    if (result.components?.length) {
+      result.flags = MessageFlags.IsComponentsV2
+    }
+    return result
   }
 
   private normaliseEdit(
@@ -62,7 +68,11 @@ export class SlashCommandCtx extends BaseCommandCtx {
     if (typeof options === 'string') return { content: options }
 
     const { ephemeral, ...rest } = options
-    return rest
+    const result: InteractionEditReplyOptions = { ...rest }
+    if (result.components?.length) {
+      result.flags = MessageFlags.IsComponentsV2
+    }
+    return result
   }
 
   hasArg(name: string): boolean {

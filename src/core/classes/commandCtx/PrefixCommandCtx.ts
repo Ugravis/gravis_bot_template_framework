@@ -1,4 +1,4 @@
-import { Guild, GuildMember, Message, TextBasedChannel, User, MessageCreateOptions } from "discord.js";
+import { Guild, GuildMember, Message, TextBasedChannel, User, MessageCreateOptions, MessageFlags } from "discord.js";
 import { BaseCommandCtx, ContextReplyOptions } from "./BaseCommandCtx";
 import { BaseCommand } from "../BaseCommand";
 
@@ -75,8 +75,13 @@ export class PrefixCommandContext extends BaseCommandCtx {
     return index === -1 ? undefined : this.args[index]
   }
 
-  private normalise(options:ContextReplyOptions | string):MessageCreateOptions {
-    if( typeof options === 'string') return { content: options }
-    return options
+  private normalise(options: ContextReplyOptions | string):MessageCreateOptions {
+    if (typeof options === 'string') return { content: options }
+
+    const result: MessageCreateOptions = { ...options }
+    if (result.components?.length) {
+      result.flags = MessageFlags.IsComponentsV2
+    }
+    return result
   }
 } 

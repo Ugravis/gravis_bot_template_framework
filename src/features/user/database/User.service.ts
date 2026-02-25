@@ -31,4 +31,9 @@ export class UserService {
     await em.flush()
     return user
   }
+
+  public async findAll(): Promise<User[]> {
+    const em = this.db.em.fork()
+    return this.userRepository.findAll(em)
+  }
 }
