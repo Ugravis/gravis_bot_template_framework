@@ -47,3 +47,11 @@ export function errorLogComponent(error: Error): ContainerBuilder {
     .addTextDisplayComponents(new TextDisplayBuilder().setContent(`-# ${moment().format('DD/MM/YYYY HH:mm:ss')} · Gravis bot`))
     .setAccentColor(0xED4245)
 }
+
+export function shutdownLogComponent(signal: string): ContainerBuilder {
+  return new ContainerBuilder()
+    .addTextDisplayComponents(new TextDisplayBuilder().setContent(`### Shut down\nReason: **\`${signal.toUpperCase()}\`**`))
+    .addSeparatorComponents(new SeparatorBuilder().setSpacing(SeparatorSpacingSize.Large))
+    .addTextDisplayComponents(new TextDisplayBuilder().setContent(`-# ${moment().format('DD/MM/YYYY HH:mm:ss')} · Gravis bot`))
+    .setAccentColor(0xFEE75C)
+}

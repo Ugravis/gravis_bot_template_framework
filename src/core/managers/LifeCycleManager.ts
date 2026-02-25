@@ -3,7 +3,7 @@ import { Logger } from "./LoggerManager"
 import { DiscordClient } from "../DiscordClient"
 import { DatabaseManager } from "./DatabaseManager"
 import { ConfigManager } from "./ConfigManager"
-import { dbBaseLogComponent, errorLogComponent } from "@/shared/utils/discord/components/logComponents"
+import { dbBaseLogComponent, errorLogComponent, shutdownLogComponent } from "@/shared/utils/discord/components/logComponents"
 
 @singleton()
 export class LifecycleManager {
@@ -44,6 +44,10 @@ export class LifecycleManager {
     this.isShuttingDown = true
 
     this.logger.warn(`Shutting down... Reason: ${signal}`)
+    await this.logger.discord(
+      this.config.env.discordLogChannels.app,
+      { components: [shutdownLogComponent(signal)] }
+    )
 
     try {
       await this.discordClient.destroy()

@@ -5,6 +5,7 @@ import { Logger } from "@/core/managers/LoggerManager"
 import { DiscordUtils } from "@/shared/utils/discord/DiscordUtils"
 import { Client, Events, SendableChannels } from "discord.js"
 import { injectable } from "tsyringe"
+import { clientReadyComponent } from "./components/clientReady.components"
 
 @injectable()
 export default class ClientReady extends BaseEvent<Events.ClientReady> {
@@ -26,8 +27,9 @@ export default class ClientReady extends BaseEvent<Events.ClientReady> {
     await this.commandsManager.registerSlashCommands()
 
     await this.discordUtils.sendClientConfigMessage(
-      this.config.env.discordLogChannels.app, { 
-        content: "I'm ready" 
+      this.config.env.discordLogChannels.app, 
+      { 
+        components: [clientReadyComponent(client)]
       }
     )
 

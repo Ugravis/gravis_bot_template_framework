@@ -84,7 +84,7 @@ export class Logger {
   ): Promise<void> {
     await this.discordUtils.sendClientConfigMessage(
       configChannel,
-      { components: options.components, flags: ['IsComponentsV2'] }
+      { components: options.components }
     )
   }
 
@@ -116,7 +116,7 @@ export class Logger {
       const channel = group[0].channel
 
       for (const chunk of this.chunk(components, this.MAX_COMPONENTS_PER_MESSAGE)) {
-        await this.discordUtils.sendClientConfigMessage(channel, { components: chunk, flags: ['IsComponentsV2'] })
+        await this.discordUtils.sendClientConfigMessage(channel, { components: chunk })
       }
     }
   }

@@ -1,7 +1,7 @@
 import { delay, inject, singleton } from "tsyringe"
 import { DiscordClient } from "@/core/DiscordClient"
 import { DiscordChannelConfig } from "@/core/config/config.types"
-import { Guild, GuildBasedChannel, MessageCreateOptions, SendableChannels, TextBasedChannel } from "discord.js"
+import { Guild, GuildBasedChannel, MessageCreateOptions, MessageFlags, SendableChannels, TextBasedChannel } from "discord.js"
 import { Logger } from "@/core/managers/LoggerManager"
 
 @singleton()
@@ -53,6 +53,13 @@ export class DiscordUtils {
     if(!channel.isSendable()) {
       this.logger.warn(`Channel not sendable: ${chanAddress.guildId}/${chanAddress.channelId}`)
       return
+    }
+
+    if (message.components?.length) {
+      message.flags = [
+        ...(Array.isArray(message.flags) ? message.flags : []), 
+        MessageFlags.IsComponentsV2
+      ]
     }
     
     try {
