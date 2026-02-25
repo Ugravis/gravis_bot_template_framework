@@ -17,4 +17,8 @@ export class DiscordClient {
   public async connect(token: string): Promise<void> {
     await this.clientInstance.login(token)
   }
+
+  public async destroy(): Promise<void> {
+    this.clientInstance.destroy()
+  }
 }

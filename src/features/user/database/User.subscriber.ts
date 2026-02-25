@@ -26,11 +26,7 @@ export class UserSubscriber implements EventSubscriber<User> {
     
     this.logger.discord(
       this.config.env.discordLogChannels.database,
-      {
-        components: [
-          dbBaseLogComponent('create', user, `<@${user.discordId}>`)
-        ]
-      }
+      { components: [dbBaseLogComponent('create', user, `<@${user.discordId}>`)] }
     )
   }
 }

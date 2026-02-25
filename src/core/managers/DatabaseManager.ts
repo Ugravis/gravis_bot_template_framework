@@ -35,6 +35,15 @@ export class DatabaseManager {
     this.logger.info(`Database connected`)
   }
 
-  public get orm(): MikroORM { return this._orm }
-  public get em(): EntityManager { return this._orm.em }
+  public get orm(): MikroORM { 
+    return this._orm 
+  }
+  
+  public get em(): EntityManager { 
+    return this._orm.em 
+  }
+
+  public async close(): Promise<void> {
+    await this._orm.close()
+  }
 }

@@ -5,10 +5,12 @@ import { EventsManager } from "@/core/managers/EventsManager"
 import { Logger } from "@/core/managers/LoggerManager"
 import { CommandsManager } from "./managers/CommandsManager"
 import { DatabaseManager } from "./managers/DatabaseManager"
+import { LifecycleManager } from "./managers/LifeCycleManager"
 
 @singleton()
 export class App {
   constructor(
+    private readonly lifeCycleManager: LifecycleManager,
     private readonly logger: Logger,
     private readonly config: ConfigManager,
     private readonly discordClient: DiscordClient,
@@ -18,6 +20,7 @@ export class App {
   ) {}
 
   public async init(): Promise<void> {
+    this.lifeCycleManager.register()
     await this.database.init()
     await this.eventsManager.init()
     await this.commandsManager.init()
