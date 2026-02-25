@@ -8,9 +8,6 @@ export interface CoreConfig {
 }
 
 export interface CommonConfig {
-  infos: {
-    version: number
-  }
   discordSystem: {
     intents: GatewayIntentBits[]
   }

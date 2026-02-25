@@ -6,6 +6,8 @@ import { DiscordUtils } from "@/shared/utils/discord/DiscordUtils"
 import { Client, Events, SendableChannels } from "discord.js"
 import { injectable } from "tsyringe"
 import { clientReadyComponent } from "./components/clientReady.components"
+import { EventsManager } from "@/core/managers/EventsManager"
+import { DatabaseManager } from "@/core/managers/DatabaseManager"
 
 @injectable()
 export default class ClientReady extends BaseEvent<Events.ClientReady> {
@@ -16,7 +18,9 @@ export default class ClientReady extends BaseEvent<Events.ClientReady> {
     private readonly logger: Logger,
     private readonly discordUtils: DiscordUtils,
     private readonly config: ConfigManager,
-    private readonly commandsManager: CommandsManager
+    private readonly commandsManager: CommandsManager,
+    private readonly eventsManager: EventsManager,
+    private readonly databaseManager: DatabaseManager
   ) {
     super()
   }
@@ -29,7 +33,12 @@ export default class ClientReady extends BaseEvent<Events.ClientReady> {
     await this.discordUtils.sendClientConfigMessage(
       this.config.env.discordLogChannels.app, 
       { 
-        components: [clientReadyComponent(client)]
+        components: [clientReadyComponent(
+          client, 
+          this.eventsManager.loadedEvents.length, 
+          this.commandsManager.loadedCommands.size,
+          this.databaseManager.dbName
+        )]
       }
     )
 

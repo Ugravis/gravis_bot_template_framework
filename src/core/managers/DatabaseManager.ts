@@ -43,6 +43,10 @@ export class DatabaseManager {
     return this._orm.em 
   }
 
+  public get dbName(): string {
+    return this._orm.config.get('dbName')
+  }
+
   public async close(): Promise<void> {
     await this._orm.close()
   }

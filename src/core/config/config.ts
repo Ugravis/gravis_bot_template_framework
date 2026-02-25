@@ -20,9 +20,6 @@ export const CORE_CONFIG: CoreConfig = {
   },
 
   common: {
-    infos: {
-      version: 0
-    },
     discordSystem: {
       intents: [
         GatewayIntentBits.Guilds,

@@ -6,6 +6,7 @@ import { Logger } from "@/core/managers/LoggerManager"
 import { CommandsManager } from "./managers/CommandsManager"
 import { DatabaseManager } from "./managers/DatabaseManager"
 import { LifecycleManager } from "./managers/LifeCycleManager"
+import { version } from '../../package.json'
 
 @singleton()
 export class App {
@@ -26,6 +27,6 @@ export class App {
     await this.commandsManager.init()
     await this.discordClient.connect(this.config.getEnvVar('BOT_TOKEN'))
 
-    this.logger.info(`App started as v${this.config.common.infos.version}`)
+    this.logger.info(`App started as v${version}`)
   }
 }
