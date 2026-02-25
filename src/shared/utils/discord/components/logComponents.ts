@@ -1,5 +1,5 @@
 import { DbType } from "@/core/managers/LoggerManager"
-import { ContainerBuilder, TextDisplayBuilder } from "discord.js"
+import { ContainerBuilder, SeparatorBuilder, SeparatorSpacingSize, TextDisplayBuilder } from "discord.js"
 import moment from "moment"
 import { capitalizeFirstLetter } from "../../functions"
 
@@ -29,13 +29,21 @@ export function dbBaseLogComponent<T extends Record<string, any>>(
   }
   
   return new ContainerBuilder()
-    .addTextDisplayComponents(
-      new TextDisplayBuilder()
-        .setContent(
-          `## ${dbTypesData[dbType].label} ${entity.constructor.name.toLowerCase()}\n`+
-          `\`💾\` ${propertiesLines.join(' | ')}${more ? ` | **More:** ${more}` : ``}.\n\n`+
-          `-# ${moment().format('DD/MM/YYYY HH:mm')} · Gravis`
-        )
-    )
+    .addTextDisplayComponents(new TextDisplayBuilder().setContent(
+      `## ${dbTypesData[dbType].label} ${entity.constructor.name.toLowerCase()}\n`+
+      `\`💾\` ${propertiesLines.join(' | ')}${more ? ` | **More:** ${more}` : ``}.\n\n`
+    ))
+    .addSeparatorComponents(new SeparatorBuilder().setSpacing(SeparatorSpacingSize.Large))
+    .addTextDisplayComponents(new TextDisplayBuilder().setContent(`-# ${moment().format('DD/MM/YYYY HH:mm:ss')} · Gravis bot`))
     .setAccentColor(dbTypesData[dbType].color)
+}
+
+export function errorLogComponent(error: Error): ContainerBuilder {
+  return new ContainerBuilder()
+    .addTextDisplayComponents(new TextDisplayBuilder().setContent(`## ${error.name}\n**\`❌ ${error.message}\`**\n\n`))
+    .addSeparatorComponents(new SeparatorBuilder().setSpacing(SeparatorSpacingSize.Large))
+    .addTextDisplayComponents(new TextDisplayBuilder().setContent(`\`\`\`\n${error.stack}\`\`\`\n`))
+    .addSeparatorComponents(new SeparatorBuilder().setSpacing(SeparatorSpacingSize.Large))
+    .addTextDisplayComponents(new TextDisplayBuilder().setContent(`-# ${moment().format('DD/MM/YYYY HH:mm:ss')} · Gravis bot`))
+    .setAccentColor(0xED4245)
 }

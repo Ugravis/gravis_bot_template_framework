@@ -61,13 +61,17 @@ export const CORE_CONFIG: CoreConfig = {
       ]
     },
     discordLogChannels: {
-      ready: {
+      app: {
         guildId: "800287894073245706",
         channelId: "805198657351712788"
       },
       database: {
         guildId: "800287894073245706",
         channelId: "1243263368211726467"
+      },
+      errors: {
+        guildId: "800287894073245706",
+        channelId: "1418608432856170547"
       }
     }
   },
@@ -87,13 +91,17 @@ export const CORE_CONFIG: CoreConfig = {
       ]
     },
     discordLogChannels: {
-      ready: {
+      app: {
         guildId: "800287894073245706",
         channelId: "805198657351712788"
       },
       database: {
         guildId: "800287894073245706",
         channelId: "1243263368211726467"
+      },
+      errors: {
+        guildId: "1418608432856170547",
+        channelId: "805198657351712788"
       }
     }
   }

@@ -26,7 +26,7 @@ export default class ClientReady extends BaseEvent<Events.ClientReady> {
     await this.commandsManager.registerSlashCommands()
 
     await this.discordUtils.sendClientConfigMessage(
-      this.config.env.discordLogChannels.ready, { 
+      this.config.env.discordLogChannels.app, { 
         content: "I'm ready" 
       }
     )

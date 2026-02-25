@@ -48,8 +48,9 @@ export interface EnvConfig {
     activities: ActivityOptions[]
   }
   discordLogChannels: {
-    ready: DiscordChannelConfig
+    app: DiscordChannelConfig
     database: DiscordChannelConfig
+    errors: DiscordChannelConfig
   }
 }
 

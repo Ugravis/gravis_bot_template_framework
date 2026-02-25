@@ -78,13 +78,17 @@ export class Logger {
     this.log(DB, message, dbType, entityName)
   }
 
-  private dbLogColors: Record<DbType, (text: string) => string> = {
-    create: chalk.bgGreen.black,
-    update: chalk.bgYellow.black,
-    delete: chalk.bgRed.white
+  public async discord(
+    configChannel: DiscordChannelConfig, 
+    options: DiscordLogOptions
+  ): Promise<void> {
+    await this.discordUtils.sendClientConfigMessage(
+      configChannel,
+      { components: options.components, flags: ['IsComponentsV2'] }
+    )
   }
 
-  public discord(
+  public discordChunk(
     channel: DiscordChannelConfig, 
     options: DiscordLogOptions
   ): void {

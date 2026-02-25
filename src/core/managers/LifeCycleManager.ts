@@ -2,6 +2,8 @@ import { singleton } from "tsyringe"
 import { Logger } from "./LoggerManager"
 import { DiscordClient } from "../DiscordClient"
 import { DatabaseManager } from "./DatabaseManager"
+import { ConfigManager } from "./ConfigManager"
+import { dbBaseLogComponent, errorLogComponent } from "@/shared/utils/discord/components/logComponents"
 
 @singleton()
 export class LifecycleManager {
@@ -9,6 +11,7 @@ export class LifecycleManager {
 
   constructor(
     private readonly logger: Logger,
+    private readonly config: ConfigManager,
     private readonly discordClient: DiscordClient,
     private readonly database: DatabaseManager
   ) {}
@@ -19,8 +22,12 @@ export class LifecycleManager {
       process.on(signal, () => this.shutdown(signal))
     }
 
-    process.on('uncaughtException', (e: Error) => {
+    process.on('uncaughtException', async (e: Error) => {
       this.logger.error(`Uncaught Exception: ${e.message}\n${e.stack}`)
+      await this.logger.discord(
+        this.config.env.discordLogChannels.errors,
+        { components: [errorLogComponent(e)] }
+      )
       this.shutdown('uncaughtException', 1)
     })
 
